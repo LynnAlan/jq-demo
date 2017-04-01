@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>jq-demo 01</title>
+</head>
+
+<body>
+    <div class="demo" id='add'>
+
+    </div>
+    <script type="text/javascript">
+        (function(window, document) {
+            var w = window,
+                doc = document;
+            var Kodo = function(selector) {
+                return new Kodo.prototype.init(selector);
+            }
+            Kodo.prototype = {
+                constructor: Kodo,
+                length: 0,
+                splice: [].splice,
+                selector: '',
+                init: function(selector) {
+                    return document.getElementById(selector);
+                },
+                hasClass: function(cls) {
+                    var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                    for (var i = 0; i < this.length; i++) {
+                        if (this[i].className.match(reg)) return true;
+                        return false;
+                    }
+                    return this;
+                },
+                addClass: function(cls) {
+                    var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                    for (var i = 0; i < this.length; i++) {
+                        if (!this[i].className.match(reg))
+                            this[i].className += ' ' + cls;
+                    }
+                    return this;
+                },
+            }
+            Kodo.prototype.init.prototype = Kodo.prototype;
+            Kodo.ajax = function() {
+                console.log(this);
+            }
+            window.f = Kodo;
+        })(window, document);
+
+        //   var obj = {
+        //     value:0,
+        //     init:function(){
+        //
+        //     },
+        //     add:function(a,b){
+        //       this.value = a + b;
+        //       return this;
+        //     },
+        //     reduce: function(a,b){
+        //       this.value = a - b;
+        //       return this;
+        //     }
+        //   }
+        //  var a =  obj.add(8,1).reduce(8,1).value;
+    </script>
+</body>
+
+</html>
