@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>jq-demo 01</title>
+</head>
+
+<body>
+    <div class="demo" id='add'>
+        <ul>
+            <li class="test">11111111111</li>
+            <li class="test">11111111111</li>
+            <li class="test">11111111111</li>
+            <li class="test">11111111111</li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        (function(window, document) {
+            var doc = document;
+            var myJq = function(selector) {
+                return new myJq.prototype.init(selector);
+            }
+            myJq.prototype = {
+                constructor: myJq,
+                length: 0,
+                selector: '',
+                splice: [].splice,
+                init: function(selector) {
+                    var ele;
+                    selector = selector.trim();
+                    if (!selector) {
+                        return this;
+                    }
+                    if (selector.charAt(0) == "#") {
+                        selector = selector.substring(1);
+                        ele = doc.getElementById(selector);
+                        this.selector = selector;
+                        this[0] = ele;
+                        this.length = 1;
+                        return this;
+                    } else {
+                        var ele = doc.querySelectorAll(selector);
+                        for (var i = 0, length = ele.length; i < length; i++) {
+                            this[i] = ele[i];
+                        }
+                        this.length = ele.length;
+                        this.selector = selector;
+                    }
+                },
+                hasClass: function(className) {
+                    var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+                    for (var i = 0, len = this.length; i < len; i++) {
+                        if (this[i].classList) {
+                            return this[i].classList.contains(className)
+                        } else {
+                            if (this[i].className.match(reg)) return true;
+                            return false;
+                        }
+                    }
+                },
+                removeClass: function(className) {
+                    var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+                    for (var i = 0, len = this.length; i < len; i++) {
+                        if (this[i].classList) {
+                            this[i].classList.remove(className);
+                        } else {
+                            if (this[i].className.match(reg)) {
+                                this[i].replace(className, '');
+                            }
+                        }
+                    }
+                    return this;
+                },
+                addClass: function(className) {
+                    var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+                    for (var i = 0, len = this.length; i < len; i++) {
+                        if (this[i].classList) {
+                            this[i].classList.add(className);
+                        } else {
+                            if (!this[i].className.match(className)) {
+                                this[i].className += " " + className
+                            }
+                        }
+                    }
+                    return this;
+                }
+            };
+            myJq.prototype.init.prototype = myJq.prototype;
+
+            myJq.ajax = {
+                get: function(url, sucFn, errFn) {
+                    ajax('get', null, url, sucFn, errFn);
+                },
+                post: function(url, data, sucFn, errFn) {
+                    ajax('post', data, url, sucFn, errFn);
+                },
+                put: function(url, data, sucFn, errFn) {
+                    ajax('put', data, url, sucFn, errFn);
+                },
+                delete: function(url, sucFn, errFn) {
+                    ajax('delete', null, url, sucFn, errFn);
+                }
+            };
+
+            // ajax
+            function ajax(type, data, url, successFn, failureFn) {
+                // create XMLHttpRequest
+                var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+
+                // open service
+                xhr.open(type, url, true);
+
+                // carry cookie
+                xhr.withCredentials = true;
+
+                xhr.send(data);
+
+                // response
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            successFn(xhr.responseText);
+                        } else {
+                            failureFn(xhr.responseText);
+                        }
+                    }
+                };
+            }
+            window.Jq = myJq;
+        })(window, document);
+    </script>
+</body>
+
+</html>
