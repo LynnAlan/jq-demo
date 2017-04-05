@@ -24,7 +24,7 @@
                     var ele;
                     selector = selector.trim();
                     if (!selector) {
-                        return this;
+                        return ;
                     }
                     if (selector.charAt(0) == "#") {
                         selector = selector.substring(1);
@@ -32,7 +32,7 @@
                         this.selector = selector;
                         this[0] = ele;
                         this.length = 1;
-                        return this;
+                      
                     } else {
                         var ele = document.querySelectorAll(selector);
                         for (var i = 0, length = ele.length; i < length; i++) {
