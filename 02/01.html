@@ -16,9 +16,9 @@
     </ul>
 </div>
 <script type="text/javascript">
-	(function(window, document) {
+	(function (window, document) {
 		var doc = document;
-		var myJq = function(selector) {
+		var myJq = function (selector) {
 			return new myJq.prototype.init(selector);
 		};
 		myJq.prototype = {
@@ -26,7 +26,7 @@
 			length: 0,
 			selector: '',
 			splice: [].splice,
-			init: function(selector) {
+			init: function (selector) {
 				var ele;
 				selector = selector.trim();
 				if (!selector) {
@@ -48,7 +48,7 @@
 					this.selector = selector;
 				}
 			},
-			hasClass: function(className) {
+			hasClass: function (className) {
 				var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
 				for (var i = 0, len = this.length; i < len; i++) {
 					if (this[i].classList) {
@@ -59,7 +59,7 @@
 					}
 				}
 			},
-			removeClass: function(className) {
+			removeClass: function (className) {
 				var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
 				for (var i = 0, len = this.length; i < len; i++) {
 					if (this[i].classList) {
@@ -72,7 +72,7 @@
 				}
 				return this;
 			},
-			addClass: function(className) {
+			addClass: function (className) {
 				var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
 				for (var i = 0, len = this.length; i < len; i++) {
 					if (this[i].classList) {
@@ -85,30 +85,30 @@
 				}
 				return this;
 			},
-            next: function(){
-                return this[0].nextElementSibling;
-            },
-			parent: function () {
-                return this[0].parentNode;
+			next: function () {
+				return this[0].nextElementSibling;
 			},
-			prev: function(){
-            	return this[0].previousElementSibling;
-            }
+			parent: function () {
+				return this[0].parentNode;
+			},
+			prev: function () {
+				return this[0].previousElementSibling;
+			}
 
 		};
 		myJq.prototype.init.prototype = myJq.prototype;
 
 		myJq.ajax = {
-			get: function(url, sucFn, errFn) {
+			get: function (url, sucFn, errFn) {
 				ajax('get', null, url, sucFn, errFn);
 			},
-			post: function(url, data, sucFn, errFn) {
+			post: function (url, data, sucFn, errFn) {
 				ajax('post', data, url, sucFn, errFn);
 			},
-			put: function(url, data, sucFn, errFn) {
+			put: function (url, data, sucFn, errFn) {
 				ajax('put', data, url, sucFn, errFn);
 			},
-			delete: function(url, sucFn, errFn) {
+			delete: function (url, sucFn, errFn) {
 				ajax('delete', null, url, sucFn, errFn);
 			}
 		};
@@ -127,7 +127,7 @@
 			xhr.send(data);
 
 			// response
-			xhr.onreadystatechange = function() {
+			xhr.onreadystatechange = function () {
 				if (xhr.readyState === 4) {
 					if (xhr.status === 200) {
 						successFn(xhr.responseText);
@@ -137,6 +137,7 @@
 				}
 			};
 		}
+
 		window.Jq = myJq;
 	})(window, document);
 	console.log(Jq('li'));
